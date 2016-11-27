@@ -35,7 +35,9 @@ def motion_model(x_tm1, u):
     B = u[0]*np.array([np.cos(x_tm1[2]),
                        np.sin(x_tm1[2]),
                        np.tan(u[1])/L])
-    return B
+    
+    x = x_tm1 + B*dt + get_disturbance()
+    return x
 
 ## Simulation Initialization
 
@@ -60,7 +62,7 @@ x_data = x_tm1 # for plotting
 # Loop
 # Note: time starts at 1 not 0
 for i in range(1,len(t)):
-    x = x_tm1 + motion_model(x_tm1, u[i])*dt + get_disturbance()
+    x = motion_model(x_tm1, u[i])
     x_data = np.vstack((x_data,x))
     x_tm1 = x
 

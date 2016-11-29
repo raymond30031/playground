@@ -1,15 +1,24 @@
-### Bicycle model
+""" 
+Bicycle model
+
+"""
+
+""" Imports measurement models form directory """
+import sys
+sys.path.append('/home/jkuo/code/playground/robotics/measurement_model')
+from GPS_measurement_model import GPSMeasurement
 
 import numpy as np
 from numpy import linalg as LA
 import matplotlib.pyplot as plt
+
 
 ## time
 dt = 0.1
 Tf = 20
 t = np.linspace(0,Tf,Tf/dt)
 
-## Robot parameters
+""" Robot parameters """
 L = 0.3
 str_max = np.radians(30)
 str_min = np.radians(-30)
@@ -39,7 +48,17 @@ def motion_model(x_tm1, u):
     x = x_tm1 + B*dt + get_disturbance()
     return x
 
-## Simulation Initialization
+# Measurement model
+# Std deviation: x: 0.1 m; y: 0.1 m; z: 0.1m
+gps_cov = np.array([[0.1**2,      0,      0],
+                    [     0, 0.1**2,      0],
+                    [     0,      0, 0.1**2]])
+gps_meas = GPSMeasurement(gps_cov)
+pos = np.array([1,2,3])
+
+print gps_meas.get_measurement(pos, True)
+
+""" Simulation Initialization """
 
 # input
 u = np.zeros((1,2)) #[m/s, rad]
@@ -55,7 +74,7 @@ for i in range(1,len(t)):
         u_new[1] = str_min
     u = np.vstack((u,u_new))
 
-# initial state
+# initial state (Prior)
 x_tm1 = np.zeros(3)
 x_data = x_tm1 # for plotting
 

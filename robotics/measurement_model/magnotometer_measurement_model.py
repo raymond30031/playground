@@ -1,21 +1,18 @@
-""" 2D GPS Measurement Model Class
+""" Magnotometer Measurement Model Class
     Input: Covariance Matrix, needs to be square
-    
-    @todo: Should extend to 3D
 
 """
 import numpy as np
 from numpy import linalg as LA
 
-class GPSMeasurement:
-    
+class MagnoMeasurement:
     def __init__(self, cov):
-        self.__cov = cov # covariance matrix
-        
-    def get_measurement(self, pos, add_noise):
-        """ 
+        self.__cov = cov
+    
+    def get_measurement(self, yaw, add_noise):
+         """ 
             Inputs:
-                pos: position, should be a n x 1 vector
+                yaw: yaw of the sensor WRT to global frame
                 add_noise: if true, add guassian noise specified by covariance
                            matrix        
             Return:
@@ -30,8 +27,6 @@ class GPSMeasurement:
         numrows = len(RV)
         noise = (RV*np.sqrt(Rv)).dot(np.random.rand(numrows,1)*2-1).flatten()
         if add_noise:
-            pos = pos + noise
+            yaw = yaw + noise
         
-        return pos
-            
-        
+        return yaw

@@ -1,5 +1,7 @@
 /*
     Bubble Sort Algorithm with ascending order
+    Note:
+    Bubble sort is an in-place and stable sorting algorithm
     Reference:
     https://www.youtube.com/watch?v=Jdtq5uKz-w4&index=3&list=PL2_aWCzGMAwKedT2KfDMB9YA5DgASZb3U
 */

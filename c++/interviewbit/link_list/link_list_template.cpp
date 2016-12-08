@@ -25,6 +25,7 @@ public:
     ~LinkList();
     void add_node_at_end(const T value);
     void reverse();
+    void reverse_recur(Node<T>* node);
     bool is_empty();
     void print();
     Node<T>* ret_head() {return head;};
@@ -84,6 +85,32 @@ void LinkList<T>::reverse() {
 }
 
 template <typename T>
+void LinkList<T>::reverse_recur(Node<T>* node) {
+
+    /*
+        | 1 | 2 | 3 | x
+        set head to node 3 when reaching the end
+        scope goes back to 2
+        In scope 2:
+        node->next points to 3, save in temp
+        change 3 pointer to node 2
+        change 2 pointer to null
+        scope goes back to 1
+    */
+
+    if (node->next == NULL) {
+        head = node;
+        return;
+    }
+
+    reverse_recur(node->next);
+
+    Node<T>* temp = node->next;
+    temp->next = node;
+    node->next = NULL; 
+}
+
+template <typename T>
 void LinkList<T>::print() {
     
     if (is_empty()) {
@@ -118,6 +145,8 @@ void reverse_print(const Node<T>* node) {
     std::cout<< node->data <<" ";
 }
 
+/*** Main loop ***/
+
 int main() {
     LinkList<int> list;
     list.add_node_at_end(10);
@@ -125,7 +154,8 @@ int main() {
     list.add_node_at_end(1);
     list.print();
     Node<int>* h = list.ret_head();
-    reverse_print(h);
+    list.reverse_recur(h);
+    list.print();
 
     return 0;
 }

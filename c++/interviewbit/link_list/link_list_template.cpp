@@ -27,10 +27,13 @@ public:
     void reverse();
     bool is_empty();
     void print();
+    Node<T>* ret_head() {return head;};
 
 private:
     Node<T>* head;
 };
+
+/*** Member function definition ***/
 
 template <typename T>
 LinkList<T>::LinkList() {
@@ -81,11 +84,6 @@ void LinkList<T>::reverse() {
 }
 
 template <typename T>
-bool LinkList<T>::is_empty() {
-    return (head==NULL);
-}
-
-template <typename T>
 void LinkList<T>::print() {
     
     if (is_empty()) {
@@ -103,13 +101,31 @@ void LinkList<T>::print() {
 
 }
 
+template <typename T>
+bool LinkList<T>::is_empty() {
+    return (head==NULL);
+}
+
+/*** Function definition ***/
+
+template <typename T>
+void reverse_print(const Node<T>* node) {
+    
+    if (node == NULL)
+        return;
+
+    reverse_print(node->next);
+    std::cout<< node->data <<" ";
+}
+
 int main() {
     LinkList<int> list;
     list.add_node_at_end(10);
     list.add_node_at_end(5);
     list.add_node_at_end(1);
     list.print();
-    list.reverse();
-    list.print();
+    Node<int>* h = list.ret_head();
+    reverse_print(h);
+
     return 0;
 }

@@ -27,6 +27,10 @@ int main() {
   return 0;  
 }
 
+// Reference:
+// https://en.wikipedia.org/wiki/Newton%27s_method?fbclid=IwAR3Ap5HMdnBfvgCJzUaaIYvHBcnUuDsya_Gi78DaEza3I8gmjeXWmZJ5Gt0
+// https://stackoverflow.com/questions/9235456/determining-floating-point-square-root?fbclid=IwAR2wDTrQjfMx8h3jmCspgyH61OwSEu5CvmQ4G0MELtQNyEBQBemzQF2elT4
+
 // J(x) = 2x
 // e(x) ~= e(x') + J(x')*delta_x
 // e(x) - e(x') =
